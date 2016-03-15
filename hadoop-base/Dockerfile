@@ -21,7 +21,7 @@ rm /tmp/jdk-7u80-linux-x64.tar.gz
 COPY files/java.sh /etc/profile.d/java.sh
 
 # Setup hadoop environment
-COPY files/hadoop.sh /etc/profile.d/hadoop.sh
+# COPY files/hadoop.sh /etc/profile.d/hadoop.sh
 
 # move all configuration files into container
 #COPY files/ssh_config ~/.ssh/config/ssh_config
