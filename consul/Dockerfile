@@ -1,4 +1,4 @@
-FROM arindamchoudhury/centos-systemd:latest
+FROM arindamchoudhury/centos-systemd
 
 MAINTAINER Arindam Choudhury <arindam@live.com>
 
