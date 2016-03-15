@@ -1,0 +1,12 @@
+
+{
+	"ui": true,
+    "datacenter": "dc1",
+    "recursors" : [ "8.8.8.8" ],
+    "ports" : {
+        "dns" : 53
+    },
+	"dns_config": {
+		"allow_stale": false
+	}
+}

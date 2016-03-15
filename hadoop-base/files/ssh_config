@@ -1,0 +1,10 @@
+#Host localhost
+#  StrictHostKeyChecking no
+
+#Host 0.0.0.0
+#  StrictHostKeyChecking no
+  
+#Host *.node.dc1.arindamdomain.com
+Host *
+   StrictHostKeyChecking no
+   UserKnownHostsFile=/dev/null

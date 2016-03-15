@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>dfs.replication</name>
+    <value>{{key "DFS_REPLICATION"}}</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>{{key "DFS_NAMEDIR"}}</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address</name>
+    <value>{{key "NAMENODE_ADDR"}}:50070</value>
+  </property>
+  <property>
+    <name>dfs.namenode.secondary.http-address</name>
+    <value>{{key "NAMENODE_ADDR"}}:50090</value>
+  </property>
+  <property>
+    <name>dfs.namenode.checkpoint.dir</name>
+    <value>{{key "FS_CHECKPOINR_DIR"}}</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>{{key "DFS_DATANODE_DATA_DIR"}}</value>
+  </property>
+  <property>
+    <name>dfs.hosts</name>
+    <value>/usr/local/hadoop-2.7.2/etc/hadoop/dfs.include</value>
+    <final>true</final>
+  </property>
+  <property>
+    <name>dfs.blocksize</name>
+    <value>{{key "DFS_BLOCKSIZE"}}</value>
+  </property>
+  <property>
+    <name>dfs.namenode.handler.count</name>
+    <value>{{key "DFS_NAMENODE_HANDLER_COUNT"}}</value>
+  </property>
+  <property>
+    <name>dfs.permissions.superusergroup</name>
+    <value>hadoop</value>
+  </property>
+</configuration>

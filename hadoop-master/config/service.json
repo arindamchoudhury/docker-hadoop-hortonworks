@@ -1,0 +1,3 @@
+{
+  "services": [{"name": "namenode"}, {"name": "resourcemanger"}, {"name": "ApplicationHistoryServer"}]
+}

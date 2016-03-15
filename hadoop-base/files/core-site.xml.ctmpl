@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://{{key "NAMENODE_ADDR"}}:8000</value>
+  </property>
+   <property>
+    <name>io.file.buffer.size</name>
+    <value>{{key "IO_FILE_BUFFER_SIZE"}}</value>
+  </property>
+  <property>
+    <name>hadoop.http.staticuser.user</name>
+    <value>hdfs</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.mapred.groups</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.mapred.hosts</name>
+    <value>*</value>
+  </property>
+</configuration>
