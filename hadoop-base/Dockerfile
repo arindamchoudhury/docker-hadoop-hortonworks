@@ -2,30 +2,23 @@ FROM arindamchoudhury/consul-agent:latest
 
 MAINTAINER Arindam Choudhury <arindam@live.com>
 
-ENV TERM linux
-ENV DEBIAN_FRONTEND noninteractive
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+# configure hortonworks repo
+wget -nv http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.4.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
 
 # install required packages
-RUN apt-get update && \
-apt-get install -y ntp libsnappy1 libsnappy-dev liblzo2-2 liblzo2-dev python-psutil libxml2-utils libssl1.0.0 libssl-dev
+RUN yum update -y && \
+yum install -y ntp hadoop hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client openssl snappy snappy-devel lzo lzo-devel hadooplzo hadooplzo-native
 #openssh-server
 
 COPY tars/jdk-7u80-linux-x64.tar.gz /tmp/jdk-7u80-linux-x64.tar.gz
-COPY tars/hadoop-2.7.2.tar.gz /tmp/hadoop-2.7.2.tar.gz
 
+RUN yum remove java-1.8.0-openjdk-headless-1.8.0.71-2.b15.el7_2.x86_64 -y
 #Download jdk-7u79 and extract to /usr/local/
-RUN apt-get purge openjdk*
 #RUN wget -c -O "jdk-7u80-linux-x64.tar.gz" --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz" && \
 RUN tar zxf /tmp/jdk-7u80-linux-x64.tar.gz -C /usr/local/ && \
 rm /tmp/jdk-7u80-linux-x64.tar.gz
 #Setup Java environment
 COPY files/java.sh /etc/profile.d/java.sh
-
-# Download Hadoop and extract to /usr/local/
-#RUN wget -c -O "hadoop-2.7.2.tar.gz" "http://apache.rediris.es/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz" && \
-RUN tar zxf /tmp/hadoop-2.7.2.tar.gz -C /usr/local/ && \
-rm /tmp/hadoop-2.7.2.tar.gz
 
 # Setup hadoop environment
 COPY files/hadoop.sh /etc/profile.d/hadoop.sh

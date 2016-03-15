@@ -26,6 +26,10 @@ curl -X PUT -d $HOSTNAME http://localhost:8500/v1/kv/YARN_RESOURCEMANGER_HOSTNAM
 DFS_NAMEDIR=$(curl -s http://localhost:8500/v1/kv/DFS_NAMEDIR?raw)
 FS_CHECKPOINT_DIR=$(curl -s http://localhost:8500/v1/kv/FS_CHECKPOINT_DIR?raw)
 FS_CHECKPOINT_EDITS_DIR=$(curl -s http://localhost:8500/v1/kv/FS_CHECKPOINT_EDITS_DIR?raw)
+
+HADOOP_CONF_DIR=$(curl -s http://localhost:8500/v1/kv/HADOOP_CONF_DIR?raw)
+HIVE_CONF_DIR=$(curl -s http://localhost:8500/v1/kv/HIVE_CONF_DIR?raw)
+
 #export =$(curl -s http://localhost:8500/v1/kv/?raw)
 
 
@@ -56,18 +60,21 @@ chgrp -R hadoop $LOG_DIR
 chmod -R g+rwxs $LOG_DIR
 mkdir -p /var/log/hadoop/hcat
 
-consul-template -template "/tmp/core-site.xml.ctmpl:/usr/local/hadoop-2.7.2/etc/hadoop/core-site.xml" -once
-consul-template -template "/tmp/hdfs-site.xml.ctmpl:/usr/local/hadoop-2.7.2/etc/hadoop/hdfs-site.xml" -once
-consul-template -template "/tmp/mapred-site.xml.ctmpl:/usr/local/hadoop-2.7.2/etc/hadoop/mapred-site.xml" -once
-consul-template -template "/tmp/yarn-site.xml.ctmpl:/usr/local/hadoop-2.7.2/etc/hadoop/yarn-site.xml" -once
+consul-template -template "/tmp/core-site.xml.ctmpl:$HADOOP_CONF_DIR/core-site.xml" -once
+consul-template -template "/tmp/hdfs-site.xml.ctmpl:$HADOOP_CONF_DIR/hdfs-site.xml" -once
+consul-template -template "/tmp/mapred-site.xml.ctmpl:$HADOOP_CONF_DIR/mapred-site.xml" -once
+consul-template -template "/tmp/yarn-site.xml.ctmpl:$HADOOP_CONF_DIR/yarn-site.xml" -once
 
-consul-template -template "/tmp/hadoop-env.sh.ctmpl:/usr/local/hadoop-2.7.2/etc/hadoop/hadoop-env.sh" -once
-consul-template -template "/tmp/yarn-env.sh.ctmpl:/usr/local/hadoop-2.7.2/etc/hadoop/yarn-env.sh" -once
-consul-template -template "/tmp/mapred-env.sh.ctmpl:/usr/local/hadoop-2.7.2/etc/hadoop/mapred-env.sh" -once
+consul-template -template "/tmp/hadoop-env.sh.ctmpl:$HADOOP_CONF_DIR/hadoop-env.sh" -once
+consul-template -template "/tmp/yarn-env.sh.ctmpl:$HADOOP_CONF_DIR/yarn-env.sh" -once
+consul-template -template "/tmp/mapred-env.sh.ctmpl:$HADOOP_CONF_DIR/mapred-env.sh" -once
 
-consul-template -template "/tmp/hive-env.sh.ctmpl:/usr/local/apache-hive-1.2.1-bin/conf/hive-env.sh" -once
+consul-template -template "/tmp/hive-env.sh.ctmpl:$HIVE_CONF_DIR/hive-env.sh" -once
 
 python /etc/memory_config.py
+
+chown -R hdfs:hadoop $HADOOP_CONF_DIR
+chmod -R 755 $HADOOP_CONF_DIR
 
 chgrp -R hadoop $HADOOP_PREFIX
 chmod -R g+rwxs $HADOOP_PREFIX
